@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Item label="First Item" />
+    <List name="My List" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import Item from './list/Item.vue'
+import List from './list/List.vue'
 
 @Component({
   components: {
-    Item
+    List
   }
 })
 export default class App extends Vue {}
