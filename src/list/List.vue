@@ -2,10 +2,10 @@
   <div class="listr-list">
     <h1>{{ name }}</h1>
     <Item
-      v-for="(item, index) in items"
+      v-for="item in items"
       v-bind:key="item"
       v-bind:label="item"
-      v-on:reserve="handleReserve(index)"
+      v-on:reserve="handleReserve"
       />
   </div>
 </template>
@@ -31,8 +31,8 @@ export default class List extends Vue {
 
   items = TestItems
 
-  handleReserve (itemIndex: number) {
-    alert(`Reserved '${TestItems[itemIndex]}'`)
+  handleReserve (item: string) {
+    alert(`Reserved '${item}'`)
   }
 }
 </script>

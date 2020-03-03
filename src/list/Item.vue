@@ -9,7 +9,6 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import ReserveButton from './ReserveButton.vue'
 
-// Define the component in class-style
 @Component({
   components: {
     ReserveButton
@@ -20,7 +19,7 @@ export default class Item extends Vue {
   label!: string;
 
   handleClick () {
-    this.$emit('reserve')
+    this.$emit('reserve', this.label)
   }
 }
 </script>
