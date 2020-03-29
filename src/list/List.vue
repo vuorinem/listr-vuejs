@@ -1,24 +1,21 @@
 <template>
   <div class="listr-list">
     <h1>{{ name }}</h1>
-    <Item
-      v-for="item in items"
-      v-bind:key="item"
-      v-bind:label="item"
-      v-on:reserve="handleReserve"
-      />
+    <div v-if="!!list">
+      <Item
+        v-for="(item, index) in list.items"
+        v-bind:key="index"
+        v-bind:item="item"
+        v-on:reserve="handleReserve"
+        />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import Item from './Item.vue'
-
-const TestItems = [
-  'First item',
-  'Second item',
-  'Third item'
-]
+import { getList, ListData, ItemData } from './list-api'
 
 @Component({
   components: {
@@ -29,10 +26,18 @@ export default class List extends Vue {
   @Prop({ default: '' })
   name!: string
 
-  items = TestItems
+  list: ListData | null = null;
 
-  handleReserve (item: string) {
-    alert(`Reserved '${item}'`)
+  handleReserve (item: ItemData) {
+    alert(`Reserved '${item.label}'`)
+  }
+
+  async loadList () {
+    this.list = await getList(this.name)
+  }
+
+  async created () {
+    this.loadList()
   }
 }
 </script>

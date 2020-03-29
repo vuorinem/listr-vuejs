@@ -1,6 +1,6 @@
 <template>
   <div class="listr-item">
-    <span class="listr-item-label">{{ label }}</span>
+    <span class="listr-item-label">{{ item.label }}</span>
     <ReserveButton v-on:click="handleClick" />
   </div>
 </template>
@@ -8,6 +8,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import ReserveButton from './ReserveButton.vue'
+import { ItemData } from './list-api'
 
 @Component({
   components: {
@@ -15,11 +16,11 @@ import ReserveButton from './ReserveButton.vue'
   }
 })
 export default class Item extends Vue {
-  @Prop({ default: '' })
-  label!: string;
+  @Prop({ default: null })
+  item!: ItemData | null;
 
   handleClick () {
-    this.$emit('reserve', this.label)
+    this.$emit('reserve', this.item)
   }
 }
 </script>
