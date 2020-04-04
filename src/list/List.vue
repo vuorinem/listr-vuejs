@@ -31,24 +31,24 @@ export default class List extends Vue {
   unsubscribe: Unsubscribe | null = null;
 
   @Watch('name')
-  onNameChange () {
-    this.initList()
+  async onNameChange () {
+    await this.initList()
   }
 
-  handleReserve (item: ItemData) {
+  async handleReserve (item: ItemData) {
     if (!this.list) {
       return
     }
 
-    reserve(this.list.name, item.label)
+    await reserve(this.list.name, item.label)
   }
 
-  handleCancel (item: ItemData) {
+  async handleCancel (item: ItemData) {
     if (!this.list) {
       return
     }
 
-    cancel(this.list.name, item.label)
+    await cancel(this.list.name, item.label)
   }
 
   async initList () {
@@ -66,7 +66,7 @@ export default class List extends Vue {
   }
 
   async created () {
-    this.initList()
+    await this.initList()
   }
 }
 </script>
