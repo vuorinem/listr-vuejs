@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Item from './Item.vue'
-import { getList, ListData, ItemData, reserve, cancel } from './list-api'
+import { getList, ListData, ItemData, reserve, cancel, Unsubscribe, subscribe } from './list-api'
 
 @Component({
   components: {
@@ -28,6 +28,12 @@ export default class List extends Vue {
   name!: string
 
   list: ListData | null = null;
+  unsubscribe: Unsubscribe | null = null;
+
+  @Watch('name')
+  onNameChange () {
+    this.initList()
+  }
 
   handleReserve (item: ItemData) {
     if (!this.list) {
@@ -45,12 +51,22 @@ export default class List extends Vue {
     cancel(this.list.name, item.label)
   }
 
+  async initList () {
+    await this.loadList()
+
+    if (this.unsubscribe !== null) {
+      this.unsubscribe()
+    }
+
+    this.unsubscribe = subscribe(this.name, () => this.loadList())
+  }
+
   async loadList () {
     this.list = await getList(this.name)
   }
 
   async created () {
-    this.loadList()
+    this.initList()
   }
 }
 </script>
