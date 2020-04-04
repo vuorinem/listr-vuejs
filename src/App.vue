@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <List name="My List" />
+    <input type="text" v-model="listName" />
+    <List v-bind:name="listName" />
   </div>
 </template>
 
@@ -13,7 +14,9 @@ import List from './list/List.vue'
     List
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  listName = 'My List'
+}
 </script>
 
 <style lang="scss">
