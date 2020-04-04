@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import Item from './Item.vue'
-import { getList, ListData, ItemData } from './list-api'
+import { getList, ListData, ItemData, reserve, cancel } from './list-api'
 
 @Component({
   components: {
@@ -30,11 +30,19 @@ export default class List extends Vue {
   list: ListData | null = null;
 
   handleReserve (item: ItemData) {
-    alert(`Reserved '${item.label}'`)
+    if (!this.list) {
+      return
+    }
+
+    reserve(this.list.name, item.label)
   }
 
   handleCancel (item: ItemData) {
-    alert(`Cancelled '${item.label}'`)
+    if (!this.list) {
+      return
+    }
+
+    cancel(this.list.name, item.label)
   }
 
   async loadList () {
