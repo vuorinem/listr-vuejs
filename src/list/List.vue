@@ -7,6 +7,7 @@
         v-bind:key="index"
         v-bind:item="item"
         v-on:reserve="handleReserve"
+        v-on:cancel="handleCancel"
         />
     </div>
   </div>
@@ -30,6 +31,10 @@ export default class List extends Vue {
 
   handleReserve (item: ItemData) {
     alert(`Reserved '${item.label}'`)
+  }
+
+  handleCancel (item: ItemData) {
+    alert(`Cancelled '${item.label}'`)
   }
 
   async loadList () {
